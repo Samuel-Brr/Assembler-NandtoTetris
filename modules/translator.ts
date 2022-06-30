@@ -19,20 +19,30 @@ export class Translator{
         
     }
 
-    translateAndReturnDest(dest: TDest){
+    constructAndReturnCInstruction(dest: TDest, comp: TComp, jump: TJump){
+        const destBinary = this.translateAndReturnDest(dest)
+        const compBinary = this.translateAndReturnComp(comp)
+        const jumpBinary = this.translateAndReturnJump(jump)
+        const cInstruction = `111${destBinary}${compBinary}${jumpBinary}`
+        return cInstruction
+    }
+
+    private translateAndReturnDest(dest: TDest){
         const traduction = destMap.get(dest)
-        return traduction
+        return traduction as string
     }
 
-    translateAndReturnComp(comp: TComp){
+    private translateAndReturnComp(comp: TComp){
         const traduction = compMap.get(comp)
-        return traduction
+        return traduction as string
     }
 
-    translateAndReturnJump(jump: TJump){
+    private translateAndReturnJump(jump: TJump){
         const traduction = jumpMap.get(jump)
-        return traduction
+        return traduction as string
     }
+
+
 
 
 

@@ -38,6 +38,13 @@ class Translator {
         const traduction = this.translateAndReturnAInstruction(AInstruction);
         this.WriteToFile(traduction, filePath);
     }
+    constructAndReturnCInstruction(dest, comp, jump) {
+        const destBinary = this.translateAndReturnDest(dest);
+        const compBinary = this.translateAndReturnComp(comp);
+        const jumpBinary = this.translateAndReturnJump(jump);
+        const cInstruction = `111${destBinary}${compBinary}${jumpBinary}`;
+        return cInstruction;
+    }
     translateAndReturnDest(dest) {
         const traduction = dest_map_1.destMap.get(dest);
         return traduction;
