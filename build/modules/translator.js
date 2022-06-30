@@ -28,6 +28,7 @@ const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const comp_map_1 = require("../maps/comp.map");
 const dest_map_1 = require("../maps/dest.map");
+const jump_map_1 = require("../maps/jump.map");
 class Translator {
     constructor(stringToTranslate, fileToWriteTo) {
         this.stringToTranslate = stringToTranslate;
@@ -43,6 +44,10 @@ class Translator {
     }
     translateAndReturnComp(comp) {
         const traduction = comp_map_1.compMap.get(comp);
+        return traduction;
+    }
+    translateAndReturnJump(jump) {
+        const traduction = jump_map_1.jumpMap.get(jump);
         return traduction;
     }
     //Helper function/////////////////////////////////////////////
@@ -67,4 +72,3 @@ class Translator {
 }
 exports.Translator = Translator;
 const test = new Translator('toto', 'tata');
-test.translateAndReturnComp('A+1');
