@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as _ from 'lodash';
+import { Instruction, Translator } from './translator';
 
 export type TCommandType = 'A_COMMAND' | 'C_COMMAND' | 'L_COMMAND';
 export type TSymbol = string
@@ -14,8 +15,10 @@ export class Parser {
 
     constructor(
         private filePath: string,
+        private fileTowriteTo: string
 
     ) {
+        const translator = new Translator()
         this.readyForUseFileData = this.openTheInputFileAndReturnSanitizedData(this.filePath);
 
         for(let i=0; i<this.readyForUseFileData.length; i++){
@@ -24,10 +27,15 @@ export class Parser {
 
             if(commandType === 'A_COMMAND' || commandType === 'L_COMMAND'){
                 let symbol = this.returnSymbol(this.readyForUseFileData[i])
+                translator.translateAInstructionAndWriteItToFile(symbol, this.fileTowriteTo)
             }else{
                 let dest = this.returnDest(this.readyForUseFileData[i])
                 let comp = this.returnComp(this.readyForUseFileData[i])
                 let jump = this.returnJump(this.readyForUseFileData[i])
+
+                let instruction = new Instruction(dest, comp, jump)
+
+                translator.constructAndWriteCInstruction(instruction, this.fileTowriteTo)
             }
 
         }
@@ -125,7 +133,7 @@ export class Parser {
 
 }
 
-const test = new Parser('../add.asm');
+const test = new Parser('../../add.asm', '../../max.hack');
 
 
 

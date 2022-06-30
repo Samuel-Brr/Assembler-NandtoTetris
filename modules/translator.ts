@@ -5,25 +5,37 @@ import { destMap } from '../maps/dest.map';
 import { jumpMap } from '../maps/jump.map';
 import { TComp, TDest, TJump } from './parser';
 
+export class Instruction{
+    
+    constructor(
+        public dest: TDest,
+        public comp: TComp,
+        public jump: TJump
+        ){}
+    
+    
+}
+
 export class Translator{
 
-    constructor(
-        private stringToTranslate: string,
-        private fileToWriteTo: string,
-    ){}
-
-    translateAInstructionAndWriteItToFile(AInstruction: string, filePath: string){
+    translateAInstructionAndWriteItToFile(AInstruction: string, fileToWriteTo: string){
         
         const traduction = this.translateAndReturnAInstruction(AInstruction)
-        this.WriteToFile(traduction, filePath)
+        this.writeToFile(traduction, fileToWriteTo)
         
     }
 
-    constructAndReturnCInstruction(dest: TDest, comp: TComp, jump: TJump){
-        const destBinary = this.translateAndReturnDest(dest)
-        const compBinary = this.translateAndReturnComp(comp)
-        const jumpBinary = this.translateAndReturnJump(jump)
-        const cInstruction = `111${destBinary}${compBinary}${jumpBinary}`
+    constructAndWriteCInstruction(instruction: Instruction, fileToWriteTo: string){
+        const cInstruction = this.constructAndReturnCInstruction(instruction)
+        this.writeToFile(cInstruction, fileToWriteTo)
+    }
+
+    private constructAndReturnCInstruction(instruction: Instruction){
+        const compBinary = this.translateAndReturnComp(instruction.comp)
+        const destBinary = this.translateAndReturnDest(instruction.dest)
+        const jumpBinary = this.translateAndReturnJump(instruction.jump)
+        const cInstruction = `111${compBinary}${destBinary}${jumpBinary}`
+        
         return cInstruction
     }
 
@@ -49,7 +61,7 @@ export class Translator{
 
     //Helper function/////////////////////////////////////////////
 
-    translateAndReturnAInstruction(AInstruction: string){
+    private translateAndReturnAInstruction(AInstruction: string){
 
         let parsed = parseInt(AInstruction)
         const restArray = []
@@ -67,11 +79,11 @@ export class Translator{
         return traduction
 
     }
-    WriteToFile(traduction: string, filepath: string){
+    
+    private writeToFile(traduction: string, filepath: string){
         fs.writeFileSync(path.join(__dirname, filepath), traduction, {flag: 'a+'})
         fs.writeFileSync(path.join(__dirname, filepath), '\n',  {flag: 'a+'})
     }
 }
 
-const test = new Translator('toto', 'tata')
 

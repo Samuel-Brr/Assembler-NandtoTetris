@@ -27,19 +27,25 @@ exports.Parser = void 0;
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const _ = __importStar(require("lodash"));
+const translator_1 = require("./translator");
 class Parser {
-    constructor(filePath) {
+    constructor(filePath, fileTowriteTo) {
         this.filePath = filePath;
+        this.fileTowriteTo = fileTowriteTo;
+        const translator = new translator_1.Translator();
         this.readyForUseFileData = this.openTheInputFileAndReturnSanitizedData(this.filePath);
         for (let i = 0; i < this.readyForUseFileData.length; i++) {
             let commandType = this.returnCommandType(this.readyForUseFileData[i]);
             if (commandType === 'A_COMMAND' || commandType === 'L_COMMAND') {
                 let symbol = this.returnSymbol(this.readyForUseFileData[i]);
+                translator.translateAInstructionAndWriteItToFile(symbol, this.fileTowriteTo);
             }
             else {
                 let dest = this.returnDest(this.readyForUseFileData[i]);
                 let comp = this.returnComp(this.readyForUseFileData[i]);
                 let jump = this.returnJump(this.readyForUseFileData[i]);
+                let instruction = new translator_1.Instruction(dest, comp, jump);
+                translator.constructAndWriteCInstruction(instruction, this.fileTowriteTo);
             }
         }
     }
@@ -123,4 +129,4 @@ class Parser {
     }
 }
 exports.Parser = Parser;
-const test = new Parser('../add.asm');
+const test = new Parser('../../add.asm', '../../max.hack');

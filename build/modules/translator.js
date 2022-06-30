@@ -23,26 +23,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Translator = void 0;
+exports.Translator = exports.Instruction = void 0;
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const comp_map_1 = require("../maps/comp.map");
 const dest_map_1 = require("../maps/dest.map");
 const jump_map_1 = require("../maps/jump.map");
+class Instruction {
+    constructor(dest, comp, jump) {
+        this.dest = dest;
+        this.comp = comp;
+        this.jump = jump;
+    }
+}
+exports.Instruction = Instruction;
 class Translator {
-    constructor(stringToTranslate, fileToWriteTo) {
-        this.stringToTranslate = stringToTranslate;
-        this.fileToWriteTo = fileToWriteTo;
-    }
-    translateAInstructionAndWriteItToFile(AInstruction, filePath) {
+    translateAInstructionAndWriteItToFile(AInstruction, fileToWriteTo) {
         const traduction = this.translateAndReturnAInstruction(AInstruction);
-        this.WriteToFile(traduction, filePath);
+        this.writeToFile(traduction, fileToWriteTo);
     }
-    constructAndReturnCInstruction(dest, comp, jump) {
-        const destBinary = this.translateAndReturnDest(dest);
-        const compBinary = this.translateAndReturnComp(comp);
-        const jumpBinary = this.translateAndReturnJump(jump);
-        const cInstruction = `111${destBinary}${compBinary}${jumpBinary}`;
+    constructAndWriteCInstruction(instruction, fileToWriteTo) {
+        const cInstruction = this.constructAndReturnCInstruction(instruction);
+        this.writeToFile(cInstruction, fileToWriteTo);
+    }
+    constructAndReturnCInstruction(instruction) {
+        const compBinary = this.translateAndReturnComp(instruction.comp);
+        const destBinary = this.translateAndReturnDest(instruction.dest);
+        const jumpBinary = this.translateAndReturnJump(instruction.jump);
+        const cInstruction = `111${compBinary}${destBinary}${jumpBinary}`;
         return cInstruction;
     }
     translateAndReturnDest(dest) {
@@ -72,10 +80,9 @@ class Translator {
         const traduction = restArray.join('').trim();
         return traduction;
     }
-    WriteToFile(traduction, filepath) {
+    writeToFile(traduction, filepath) {
         fs.writeFileSync(path.join(__dirname, filepath), traduction, { flag: 'a+' });
         fs.writeFileSync(path.join(__dirname, filepath), '\n', { flag: 'a+' });
     }
 }
 exports.Translator = Translator;
-const test = new Translator('toto', 'tata');
