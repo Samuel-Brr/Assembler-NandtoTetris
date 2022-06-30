@@ -5,7 +5,8 @@ import * as _ from 'lodash';
 type TCommandType = 'A_COMMAND' | 'C_COMMAND' | 'L_COMMAND';
 type TSymbol = string
 type TDest = null | 'M' | 'D' | 'MD' | 'A' | 'AM' | 'AD' | 'AMD';
-type TComp = '0' | '1' | '-1' | 'D' | 'A' | 'M' | '!D' | '!A' | '!M' | '-D' | '-A' | '-M' |'D+1' |'A+1' |'M+1'|'D-1' |'A-1' |'M-1'|'D+A' |'D+M'|'D-A' |'D-M'|'A-D' |'M-D'|'D&A' |'D&M'|'D|A' |'D|M'
+type TComp = '0' | '1' | '-1' | 'D' | 'A' | 'M' | '!D' | '!A' | '!M' | '-D' | '-A' | '-M' |'D+1' |'A+1' |'M+1'|'D-1' |'A-1' |'M-1'|'D+A' |'D+M'|'D-A' |'D-M'|'A-D' |'M-D'|'D&A' |'D&M'|'D|A' |'D|M';
+type TJump = null | 'JGT' | 'JEQ' | 'JGE' | 'JLT' | 'JNE' | 'JLE' | 'JMP'
 
 export class Parser {
 
@@ -26,7 +27,7 @@ export class Parser {
             }else{
                 let dest = this.returnDest(this.readyForUseFileData[i])
                 let comp = this.returnComp(this.readyForUseFileData[i])
-                console.log(comp)
+                let jump = this.returnJump(this.readyForUseFileData[i])
             }
 
         }
@@ -76,6 +77,16 @@ export class Parser {
             const temporaryArray = command.split(/=|;/)
             const comp = temporaryArray[1].trim()
             return comp as TComp
+        }
+    }
+
+    private returnJump(command: string): TJump{
+        if(!command.includes(';')){
+            return null;
+        }else{
+            const temporaryArray = command.split(';')
+            const jump = temporaryArray[1].trim()
+            return jump as TJump
         }
     }
     

@@ -39,7 +39,7 @@ class Parser {
             else {
                 let dest = this.returnDest(this.readyForUseFileData[i]);
                 let comp = this.returnComp(this.readyForUseFileData[i]);
-                console.log(comp);
+                let jump = this.returnJump(this.readyForUseFileData[i]);
             }
         }
     }
@@ -89,6 +89,16 @@ class Parser {
             const temporaryArray = command.split(/=|;/);
             const comp = temporaryArray[1].trim();
             return comp;
+        }
+    }
+    returnJump(command) {
+        if (!command.includes(';')) {
+            return null;
+        }
+        else {
+            const temporaryArray = command.split(';');
+            const jump = temporaryArray[1].trim();
+            return jump;
         }
     }
     //Helper functions ////////////////////////////////////////////////////////
