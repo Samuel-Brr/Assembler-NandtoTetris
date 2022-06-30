@@ -2,8 +2,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as _ from 'lodash';
 
-type TCommandType = 'A_COMMAND' | 'C_COMMAND'| 'L_COMMAND';
+type TCommandType = 'A_COMMAND' | 'C_COMMAND' | 'L_COMMAND';
 type TSymbol = string
+type TDest = null | 'M' | 'D' | 'MD' | 'A' | 'AM' | 'AD' | 'AMD';
+type TComp = '0' | '1' | '-1' | 'D' | 'A' | 'M' | '!D' | '!A' | '!M' | '-D' | '-A' | '-M' |'D+1' |'A+1' |'M+1'|'D-1' |'A-1' |'M-1'|'D+A' |'D+M'|'D-A' |'D-M'|'A-D' |'M-D'|'D&A' |'D&M'|'D|A' |'D|M'
 
 export class Parser {
 
@@ -22,7 +24,8 @@ export class Parser {
             if(commandType === 'A_COMMAND' || commandType === 'L_COMMAND'){
                 let symbol = this.returnSymbol(this.readyForUseFileData[i])
             }else{
-                
+                let dest = this.returnDest(this.readyForUseFileData[i])
+
             }
 
         }
@@ -47,7 +50,17 @@ export class Parser {
             const symbol = rawCommand.replace('(', '').replace(')', '').trim()
             return symbol
         }
-    } 
+    }
+    
+    private returnDest(command: string): TDest{
+        if(!command.includes('=')){
+            return null
+        }else{
+            const temporaryArray = command.split('=')
+            const dest = temporaryArray[0].trim()
+            return dest as TDest 
+        }
+    }
     
     
     
@@ -85,3 +98,5 @@ export class Parser {
 }
 
 const test = new Parser('../add.asm');
+
+

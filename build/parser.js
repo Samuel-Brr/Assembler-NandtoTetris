@@ -37,6 +37,7 @@ class Parser {
                 let symbol = this.returnSymbol(this.readyForUseFileData[i]);
             }
             else {
+                let dest = this.returnDest(this.readyForUseFileData[i]);
             }
         }
     }
@@ -59,6 +60,16 @@ class Parser {
         else {
             const symbol = rawCommand.replace('(', '').replace(')', '').trim();
             return symbol;
+        }
+    }
+    returnDest(command) {
+        if (!command.includes('=')) {
+            return null;
+        }
+        else {
+            const temporaryArray = command.split('=');
+            const dest = temporaryArray[0].trim();
+            return dest;
         }
     }
     //Helper functions ////////////////////////////////////////////////////////
