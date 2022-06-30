@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { compMap } from '../maps/comp.map';
 import { destMap } from '../maps/dest.map';
-import { TDest } from './parser';
+import { TComp, TDest } from './parser';
 
 export class Translator{
 
@@ -19,6 +20,11 @@ export class Translator{
 
     translateAndReturnDest(dest: TDest){
         const traduction = destMap.get(dest)
+        return traduction
+    }
+
+    translateAndReturnComp(comp: TComp){
+        const traduction = compMap.get(comp)
         return traduction
     }
 
@@ -52,5 +58,5 @@ export class Translator{
 }
 
 const test = new Translator('toto', 'tata')
-test.translateAndReturnDest('null')
+test.translateAndReturnComp('A+1')
 
