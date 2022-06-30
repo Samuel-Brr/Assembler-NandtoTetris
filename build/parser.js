@@ -33,7 +33,11 @@ class Parser {
         this.readyForUseFileData = this.openTheInputFileAndReturnSanitizedData(this.filePath);
         for (let i = 0; i < this.readyForUseFileData.length; i++) {
             let commandType = this.returnCommandType(this.readyForUseFileData[i]);
-            console.log('COMMAND TYPE: ', commandType);
+            if (commandType === 'A_COMMAND' || commandType === 'L_COMMAND') {
+                let symbol = this.returnSymbol(this.readyForUseFileData[i]);
+            }
+            else {
+            }
         }
     }
     returnCommandType(command) {
@@ -45,6 +49,16 @@ class Parser {
         }
         else {
             return 'C_COMMAND';
+        }
+    }
+    returnSymbol(rawCommand) {
+        if (rawCommand.startsWith('@')) {
+            const symbol = rawCommand.replace('@', '').trim();
+            return symbol;
+        }
+        else {
+            const symbol = rawCommand.replace('(', '').replace(')', '').trim();
+            return symbol;
         }
     }
     //Helper functions ////////////////////////////////////////////////////////

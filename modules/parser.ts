@@ -2,7 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as _ from 'lodash';
 
-type Command = 'A_COMMAND' | 'C_COMMAND'| 'L_COMMAND';
+type TCommandType = 'A_COMMAND' | 'C_COMMAND'| 'L_COMMAND';
+type TSymbol = string
 
 export class Parser {
 
@@ -17,12 +18,18 @@ export class Parser {
         for(let i=0; i<this.readyForUseFileData.length; i++){
 
             let commandType = this.returnCommandType(this.readyForUseFileData[i])
-            console.log('COMMAND TYPE: ', commandType)
+
+            if(commandType === 'A_COMMAND' || commandType === 'L_COMMAND'){
+                let symbol = this.returnSymbol(this.readyForUseFileData[i])
+            }else{
+                
+            }
+
         }
     
     }   
     
-    private returnCommandType(command: string): Command{
+    private returnCommandType(command: string): TCommandType{
         if(command.startsWith('@')){
             return 'A_COMMAND'
         }else if(command.startsWith('(')){
@@ -31,6 +38,16 @@ export class Parser {
             return 'C_COMMAND'
         } 
     }
+
+    private returnSymbol(rawCommand: string): TSymbol{
+        if(rawCommand.startsWith('@')){
+            const symbol = rawCommand.replace('@', '').trim()
+            return symbol
+        }else{
+            const symbol = rawCommand.replace('(', '').replace(')', '').trim()
+            return symbol
+        }
+    } 
     
     
     

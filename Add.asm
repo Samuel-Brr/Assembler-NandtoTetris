@@ -11,3 +11,4 @@ D=A  // toto
 D=D+A
 @0
 M=D
+
