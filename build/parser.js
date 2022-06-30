@@ -38,6 +38,8 @@ class Parser {
             }
             else {
                 let dest = this.returnDest(this.readyForUseFileData[i]);
+                let comp = this.returnComp(this.readyForUseFileData[i]);
+                console.log(comp);
             }
         }
     }
@@ -70,6 +72,23 @@ class Parser {
             const temporaryArray = command.split('=');
             const dest = temporaryArray[0].trim();
             return dest;
+        }
+    }
+    returnComp(command) {
+        if (!command.includes('=')) {
+            const temporaryArray = command.split(';');
+            const comp = temporaryArray[0].trim();
+            return comp;
+        }
+        else if (!command.includes(';')) {
+            const temporaryArray = command.split('=');
+            const comp = temporaryArray[1].trim();
+            return comp;
+        }
+        else {
+            const temporaryArray = command.split(/=|;/);
+            const comp = temporaryArray[1].trim();
+            return comp;
         }
     }
     //Helper functions ////////////////////////////////////////////////////////

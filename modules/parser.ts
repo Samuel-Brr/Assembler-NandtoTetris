@@ -25,7 +25,8 @@ export class Parser {
                 let symbol = this.returnSymbol(this.readyForUseFileData[i])
             }else{
                 let dest = this.returnDest(this.readyForUseFileData[i])
-
+                let comp = this.returnComp(this.readyForUseFileData[i])
+                console.log(comp)
             }
 
         }
@@ -59,6 +60,22 @@ export class Parser {
             const temporaryArray = command.split('=')
             const dest = temporaryArray[0].trim()
             return dest as TDest 
+        }
+    }
+
+    private returnComp(command: string): TComp{
+        if(!command.includes('=')){
+            const temporaryArray = command.split(';')
+            const comp = temporaryArray[0].trim()
+            return comp as TComp
+        }else if(!command.includes(';')){
+            const temporaryArray = command.split('=')
+            const comp = temporaryArray[1].trim()
+            return comp as TComp
+        }else{
+            const temporaryArray = command.split(/=|;/)
+            const comp = temporaryArray[1].trim()
+            return comp as TComp
         }
     }
     
@@ -98,5 +115,6 @@ export class Parser {
 }
 
 const test = new Parser('../add.asm');
+
 
 
