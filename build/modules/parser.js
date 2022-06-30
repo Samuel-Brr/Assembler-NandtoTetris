@@ -129,4 +129,4 @@ class Parser {
     }
 }
 exports.Parser = Parser;
-const test = new Parser('../../add.asm', '../../max.hack');
+const test = new Parser('../../PongL.asm', '../../pongL.hack');

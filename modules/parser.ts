@@ -133,7 +133,7 @@ export class Parser {
 
 }
 
-const test = new Parser('../../add.asm', '../../max.hack');
+const test = new Parser('../../PongL.asm', '../../pongL.hack');
 
 
 

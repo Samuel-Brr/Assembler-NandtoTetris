@@ -77,7 +77,6 @@ export class Translator{
 
         const traduction = restArray.join('').trim()
         return traduction
-
     }
     
     private writeToFile(traduction: string, filepath: string){
