@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.destMap = void 0;
+exports.destMap = new Map();
+exports.destMap.set('null', '000');
+exports.destMap.set('M', '001');
+exports.destMap.set('D', '010');
+exports.destMap.set('MD', '011');
+exports.destMap.set('A', '100');
+exports.destMap.set('AM', '101');
+exports.destMap.set('AD', '110');
+exports.destMap.set('AMD', '111');

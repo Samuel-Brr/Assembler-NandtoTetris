@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { destMap } from '../maps/dest.map';
+import { TDest } from './parser';
 
 export class Translator{
 
@@ -15,7 +17,15 @@ export class Translator{
         
     }
 
-    //Helper function
+    translateAndReturnDest(dest: TDest){
+        const traduction = destMap.get(dest)
+        return traduction
+    }
+
+
+
+
+    //Helper function/////////////////////////////////////////////
 
     translateAndReturnAInstruction(AInstruction: string){
 
@@ -42,4 +52,5 @@ export class Translator{
 }
 
 const test = new Translator('toto', 'tata')
-test.translateAInstructionAndWriteItToFile('13', '../test.txt')
+test.translateAndReturnDest('null')
+

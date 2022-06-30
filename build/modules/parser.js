@@ -66,7 +66,7 @@ class Parser {
     }
     returnDest(command) {
         if (!command.includes('=')) {
-            return null;
+            return 'null';
         }
         else {
             const temporaryArray = command.split('=');
@@ -93,7 +93,7 @@ class Parser {
     }
     returnJump(command) {
         if (!command.includes(';')) {
-            return null;
+            return 'null';
         }
         else {
             const temporaryArray = command.split(';');

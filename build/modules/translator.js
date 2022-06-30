@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Translator = void 0;
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const dest_map_1 = require("../maps/dest.map");
 class Translator {
     constructor(stringToTranslate, fileToWriteTo) {
         this.stringToTranslate = stringToTranslate;
@@ -35,7 +36,11 @@ class Translator {
         const traduction = this.translateAndReturnAInstruction(AInstruction);
         this.WriteToFile(traduction, filePath);
     }
-    //Helper function
+    translateAndReturnDest(dest) {
+        const traduction = dest_map_1.destMap.get(dest);
+        return traduction;
+    }
+    //Helper function/////////////////////////////////////////////
     translateAndReturnAInstruction(AInstruction) {
         let parsed = parseInt(AInstruction);
         const restArray = [];
@@ -57,4 +62,4 @@ class Translator {
 }
 exports.Translator = Translator;
 const test = new Translator('toto', 'tata');
-test.translateAInstructionAndWriteItToFile('13', '../test.txt');
+test.translateAndReturnDest('null');
