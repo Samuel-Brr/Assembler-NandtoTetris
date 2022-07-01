@@ -32,5 +32,8 @@ class SymbolTable {
         const binaryAdress = address; //TODO traduire l'adresse en binaire
         this.symbolTable.set(symbol, binaryAdress);
     }
+    contains(symbol) {
+        return this.symbolTable.has(symbol);
+    }
 }
 exports.SymbolTable = SymbolTable;

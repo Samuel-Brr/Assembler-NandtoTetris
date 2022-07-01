@@ -1,3 +1,5 @@
+import { map } from "lodash"
+
 export class SymbolTable{
 
     private symbolTable: Map<string, string> = new Map()
@@ -30,7 +32,11 @@ export class SymbolTable{
 
     addEntry(symbol: string, address: number){
         const binaryAdress = address; //TODO traduire l'adresse en binaire
-        this.symbolTable.set(symbol, binaryAdress)
+        this.symbolTable.set(symbol, binaryAdress);
+    }
+
+    contains(symbol: string): boolean {
+        return this.symbolTable.has(symbol)
     }
 
 }
