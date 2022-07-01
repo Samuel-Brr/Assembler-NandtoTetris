@@ -39,4 +39,8 @@ export class SymbolTable{
         return this.symbolTable.has(symbol)
     }
 
+    getAdress(symbol: string): string {
+        return this.symbolTable.get(symbol) as string
+    }
+
 }

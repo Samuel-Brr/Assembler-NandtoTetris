@@ -35,5 +35,8 @@ class SymbolTable {
     contains(symbol) {
         return this.symbolTable.has(symbol);
     }
+    getAdress(symbol) {
+        return this.symbolTable.get(symbol);
+    }
 }
 exports.SymbolTable = SymbolTable;
