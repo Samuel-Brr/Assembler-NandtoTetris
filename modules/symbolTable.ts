@@ -26,8 +26,11 @@ export class SymbolTable{
         this.symbolTable.set('R15', '0000000000001111')
         this.symbolTable.set('SCREEN', '0100000000000000')
         this.symbolTable.set('KBD', '0110000000000000')
+    }
 
-        
+    addEntry(symbol: string, address: number){
+        const binaryAdress = address; //TODO traduire l'adresse en binaire
+        this.symbolTable.set(symbol, binaryAdress)
     }
 
 }
